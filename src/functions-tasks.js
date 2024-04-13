@@ -98,8 +98,17 @@ function getPowerFunction(exponent) {
  *   getPolynom(8)     => y = 8
  *   getPolynom()      => null
  */
-function getPolynom() {
-  throw new Error('Not implemented');
+function getPolynom(...args) {
+  if (args.length === 0) {
+    return null;
+  }
+  return function fu(value) {
+    let result = 0;
+    for (let i = 0; i < args.length; i += 1) {
+      result += value ** (args.length - i - 1) * args[i];
+    }
+    return result;
+  };
 }
 
 /**
@@ -205,8 +214,10 @@ function logger(func, logFunc) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn, ...args1) {
+  return (...moreArgs) => {
+    return fn(...args1, ...moreArgs);
+  };
 }
 
 /**
@@ -226,8 +237,13 @@ function partialUsingArguments(/* fn, ...args1 */) {
  *   getId4() => 7
  *   getId10() => 11
  */
-function getIdGeneratorFunction(/* startFrom */) {
-  throw new Error('Not implemented');
+function getIdGeneratorFunction(startFrom) {
+  let counter = startFrom - 1;
+
+  return function fub() {
+    counter += 1;
+    return counter;
+  };
 }
 
 module.exports = {
